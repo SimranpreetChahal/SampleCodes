@@ -153,26 +153,40 @@ findDuplicates([2,4,2,5,6,3,5,3])
 
 //MARK:7.WAP to remove duplicates from an array
 func removeDuplicates(_ inputArray:[Int]) -> Array<Int> {
-    var inputArrayNew = inputArray
-    for i in 0..<inputArrayNew.count {
-        var previousNumber:Int = inputArrayNew[i]
-        for j in i+1..<inputArrayNew.count {
-            if( previousNumber == inputArray[j]) {
-                inputArrayNew.remove(at: j)
-                inputArrayNew.count -= 1
-            }
+    var newArray = [Int]()
+    var current:Int = inputArray[0]
+    var found = false
+    for i in 0..<inputArray.count {
+        if(current == inputArray[i] && !found) {
+            newArray.append(inputArray[i])
+            found = true
         }
-        previousNumber = inputArray[i]
+        else if(current != inputArray[i]) {
+            newArray.append(inputArray[i])
+            current = inputArray[i]
+        }
     }
-    return inputArrayNew
+    return newArray
 }
 removeDuplicates(duplicateArray)
 
-//
-////MARK:8.WAP to sort an array using quick sort
-//func quickSort(_ inputArray:[Int]) {
-//    
-//}
+
+//MARK:8.WAP to sort an array using quick sort
+func quicksort<T: Comparable>(_ inputArray: [T]) -> [T] {
+    guard inputArray.count > 1 else {
+        return inputArray
+    }
+    
+    let pivot = inputArray[inputArray.count/2]
+    let less = inputArray.filter { $0 < pivot }
+    let equal = inputArray.filter { $0 == pivot }
+    let greater = inputArray.filter { $0 > pivot }
+
+    return quicksort(less) + equal + quicksort(greater)
+}
+let list = [ 10, 0, 3, 9, 2, 14, 8, 27, 1, 5, 8, -1, 26 ]
+quicksort(list)
+
 //
 ////MARK:9.find intersection of two sorted array
 //func findArrayIntersection(_ inputArray:[Int]) {
