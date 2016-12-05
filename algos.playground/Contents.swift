@@ -2,6 +2,25 @@
 import UIKit
 
 var str = "Hello, playground"
+
+/* My learning testing for range issues */
+let chars = [Character](str.characters)
+let startIndex = str.characters.startIndex
+let endIndex = str.characters.endIndex
+str[startIndex]
+str[str.index(before:endIndex)]
+str[str.index(after: startIndex)]
+str[str.index(startIndex, offsetBy:3)]
+str[str.index(endIndex, offsetBy:-3)]
+str[startIndex..<str.index(endIndex,offsetBy:-3)]
+let rangeOFPlay = str.range(of: "play")
+str.removeSubrange(rangeOFPlay!)
+str.insert(contentsOf:"Sims".characters, at: (rangeOFPlay?.lowerBound)!)
+str.insert(contentsOf:"Preet".characters, at: (rangeOFPlay?.upperBound)!)
+
+
+
+
 var myArray = [1,2,3,4,5]
 let index = myArray[0]
 var names = ["Sandeep","Simran","John","Avin","Harry"]
@@ -44,35 +63,35 @@ let reversediput = String(fullNameArray.reversed())
 var arr = fullName.characters.map { String($0) }
 arr
 
+//MARK:find non repeating characters in a string
+func countCharactersInString(_ inputString:String) {
+    let inputCharArray = [Character](inputString.characters)
+    
+    for (index,element) in inputCharArray.enumerated() {
+        print("first loop testing:\(index)\(element)")
+    }
+    var counts = [Character: Int]()
+    
+    for character in inputCharArray {
+        if(counts[character] != nil) {
+            counts[character] = (counts[character] ?? 0) + 1
+        }
+        else {
+            counts[character] = 1
+        }
+    }
+    for (key, value) in counts{
+        if(value > 1) {
+            print(key)
+        }
+    }
+    let nonRepeatingChars = inputCharArray.filter({counts[$0] == 1})
+    nonRepeatingChars
+    nonRepeatingChars.first
+}
 var inputString = "abcdab"
-var inputCharArray = [Character](inputString.characters)
+countCharactersInString("simranpreet")
 
-var sortedArray = inputCharArray.sorted()
-
-for (index,element) in inputCharArray.enumerated() {
-    print("first loop testing:\(index)\(element)")
-}
-var counts: [Character: Int] = [:]
-
-for character in inputCharArray {
-    if(counts[character] != nil) {
-        counts[character] = (counts[character] ?? 0) + 1
-    }
-    else {
-        counts[character] = 1
-    }
-}
-counts
-
-for (key, value) in counts{
-    if(value > 1) {
-    print(key)
-}
-}
-
-let nonRepeatingChars = inputCharArray.filter({counts[$0] == 1})
-nonRepeatingChars
-nonRepeatingChars.first
 
 //MARK:find number of vowels in a word
 func numberOfVowels(_ inputString:String)-> Int {
@@ -189,27 +208,73 @@ quicksort(list)
 
 //
 ////MARK:9.find intersection of two sorted array
-//func findArrayIntersection(_ inputArray:[Int]) {
-//    
-//}
+func findArrayIntersection(_ array1:[Int], _ array2:[Int]) -> [Int] {
+    var intersectionArray = [Int]()
+    
+    for array1Element in array1 {
+        for array2Element in array2 {
+            if(array2Element == array1Element && !intersectionArray.contains(array1Element)) {
+                intersectionArray.append(array1Element)
+            }
+        }
+    }
+    return intersectionArray
+}
+
+findArrayIntersection([1,22,13,54,3], [1,22,33,54,22])
 //
 ////MARK:10.find an element which is non-repeated in an repeatedArray
-//func findNonRepeatedElement(_ inputArray:[Int]) {
-//    
-//}
+func findNonRepeatedElement(_ inputArray:[Int]) -> [Int]{
+    var nonRepeatingArray = [Int]()
+    var current:Int = inputArray[0]
+    var found = false
+    for i in 0..<inputArray.count {
+        if(current == inputArray[i]) {
+            nonRepeatingArray.append(inputArray[i])
+            found = true
+        }
+        else if(current != inputArray[i]) {
+            //nonRepeatingArray.append(inputArray[i])
+            current = inputArray[i]
+        }
+    }
+    return nonRepeatingArray
+}
+findNonRepeatedElement([34,4,2,5,3,4,7,8])
+
 //
 ////MARK:11.find kth smallest eleemnt in an unsorted array
-//func findKthSmallestElement(_ inputArray:[Int]) {
+//func findKthSmallestElement(_ inputArray:[Int], int k) {
 //    
 //}
 //
 ////MARK:13.find common elements in three sorted array
-//func findCommmonElementsIn3SortedArray(_ array1:[Int],array2:[Int],array3:[Int]) {
-//    
-//}
+func findCommmonElementsIn3SortedArray(_ array1:[Int],_ array2:[Int],_ array3:[Int]) {
+    var i = 0,j = 0,k = 0
+    
+    while(i < array1.count && j < array2.count && k < array3.count) {
+        if(array1[i] == array2[j] && array2[j] == array3[k]) {
+            print (array1[i])
+            i += 1
+            j += 1
+            k += 1
+        }
+        else if(array2[j] > array1[i]) {
+            i += 1
+        }
+        else if(array3[k] > array2[j]) {
+           j += 1
+        }
+        else {
+            k += 1
+        }
+    }
+}
+findCommmonElementsIn3SortedArray([1, 5, 10, 20, 40, 80],[6, 7, 20, 80, 100],[3, 4, 15, 20, 30, 70, 80, 120])
+
 //
 ////MARK:14.find first repeating eleemnt in an array
-//func findFirstRepeatingElement(_ inputArray:[Int]) {
+//func findFirstRepeatingElement(_ inputArray:[Int]) -> Int {
 //    
 //}
 //
