@@ -19,11 +19,12 @@ str.insert(contentsOf:"Sims".characters, at: (rangeOFPlay?.lowerBound)!)
 str.insert(contentsOf:"Preet".characters, at: (rangeOFPlay?.upperBound)!)
 
 
-
-
 var myArray = [1,2,3,4,5]
+let myStringArray = myArray.map{String($0)}
+
 let index = myArray[0]
 var names = ["Sandeep","Simran","John","Avin","Harry"]
+let myString = myStringArray.joined(separator:"")
 
 func backward(_ s1:String,s2:String) -> Bool{
     return s1 > s2
@@ -62,6 +63,24 @@ let reversediput = String(fullNameArray.reversed())
 
 var arr = fullName.characters.map { String($0) }
 arr
+//MARK: practice map,filter,flattenmap closures
+myArray
+//MAP
+let mapArray = myArray.map{String($0)+"$"}
+mapArray
+
+//FLATMAP
+let collections = [[5,2,7],[4,8],[9,1,3]]
+let flatMap = collections.flatMap{$0}
+flatMap
+
+//REDUCE
+let text = names.reduce("Saminder", +)
+text
+
+//FILTER
+let filteredArray = myArray.filter{$0 > 2}
+filteredArray
 
 //MARK:find non repeating characters in a string
 func countCharactersInString(_ inputString:String) {
@@ -229,7 +248,7 @@ func findNonRepeatedElement(_ inputArray:[Int]) -> [Int]{
     var current:Int = inputArray[0]
     var found = false
     for i in 0..<inputArray.count {
-        if(current == inputArray[i]) {
+        if(current == inputArray[i] && !found) {
             nonRepeatingArray.append(inputArray[i])
             found = true
         }
@@ -272,7 +291,20 @@ func findCommmonElementsIn3SortedArray(_ array1:[Int],_ array2:[Int],_ array3:[I
 }
 findCommmonElementsIn3SortedArray([1, 5, 10, 20, 40, 80],[6, 7, 20, 80, 100],[3, 4, 15, 20, 30, 70, 80, 120])
 
-//
+//MARK: find maximum subarray in an array
+
+func maximumSumSubarray(_ n:[Int]) ->Int{
+    var num = n
+    var current = num[0]
+    var best = num[0]
+    
+    for i in 0..<num.count {
+        current = max(current+num[i],num[i])
+        best = max(current,best)
+    }
+    return best
+}
+maximumSumSubarray([2,-4,5,6,-4,3])
 ////MARK:14.find first repeating eleemnt in an array
 //func findFirstRepeatingElement(_ inputArray:[Int]) -> Int {
 //    
